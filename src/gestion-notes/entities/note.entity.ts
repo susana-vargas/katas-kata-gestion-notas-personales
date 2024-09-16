@@ -8,7 +8,7 @@ export class NoteEntity {
   @Column({ type: 'varchar' })
   content: string;
 
-  @Column({ type: 'varchar', name: 'created_at' })
+  @Column({ type: 'timestamp', name: 'created_at' })
   createdAt: string;
 
   @Column({ type: 'integer' })
