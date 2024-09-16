@@ -4,6 +4,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { NoteModule } from './gestion-notes/note.module';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { NoteModule } from './gestion-notes/note.module';
       },
     }),
     NoteModule,
+    DatabaseModule,
   ],
   controllers: [AppController],
   providers: [AppService],

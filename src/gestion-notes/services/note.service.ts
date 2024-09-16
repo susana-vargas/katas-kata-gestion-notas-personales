@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { v4 } from 'uuid';
 
-import { NoteStrategy } from './note.strategy';
-import { Note } from './types/notes';
+import { NoteStrategy } from '../strategys/note.strategy';
+import { Note } from '../types/notes';
 
 type CreateParams = {
   id: string;
