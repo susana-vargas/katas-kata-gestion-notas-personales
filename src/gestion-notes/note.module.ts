@@ -1,7 +1,10 @@
 import { BullModule } from '@nestjs/bull';
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
+import { DatabaseModule } from 'src/database/database.module';
 import { NoteConroller } from './note.controller';
+import { NoteEntity } from './entities/note.entity';
 import { NoteService } from './services/note.service';
 import { NoteStrategy } from './strategys/note.strategy';
 import { NOTIFICATION_RECORDATORY } from 'src/constants';
@@ -14,6 +17,8 @@ import { QueueProcessor } from './queue.processor';
     BullModule.registerQueue({
       name: NOTIFICATION_RECORDATORY,
     }),
+    DatabaseModule,
+    TypeOrmModule.forFeature([NoteEntity]),
   ],
   controllers: [NoteConroller],
   providers: [NoteStrategy, NoteService, NotificationService, QueueProcessor],
