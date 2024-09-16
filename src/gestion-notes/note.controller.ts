@@ -1,9 +1,9 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 
-import { NoteService } from './note.service';
-import { NoteDto } from './note.dto';
+import { NoteService } from './services/note.service';
+import { NoteDto } from './dtos/note.dto';
 import { Note } from './types/notes';
-import { NotificationService } from './notification-service';
+import { NotificationService } from './services/notification-service';
 
 @Controller('note')
 export class NoteConroller {
