@@ -3,14 +3,23 @@ import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { NoteService } from './note.service';
 import { NoteDto } from './note.dto';
 import { Note } from './types/notes';
+import { NotificationService } from './notification-service';
 
 @Controller('note')
 export class NoteConroller {
-  constructor(private readonly noteService: NoteService) {}
+  constructor(
+    private readonly noteService: NoteService,
+    private readonly notificationService: NotificationService,
+  ) {}
 
   @Get()
   getAll(@Query('createdAt') createdAt?: string) {
     return this.noteService.getAll(createdAt);
+  }
+
+  @Get('notify')
+  sendNotification() {
+    return this.notificationService.execute();
   }
 
   @Get(':id')
