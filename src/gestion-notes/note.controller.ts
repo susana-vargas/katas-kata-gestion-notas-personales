@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 
 import { NoteService } from './note.service';
 import { NoteDto } from './note.dto';
@@ -9,8 +9,13 @@ export class NoteConroller {
   constructor(private readonly noteService: NoteService) {}
 
   @Get()
-  getAll() {
-    return this.noteService.getAll();
+  getAll(@Query('createdAt') createdAt?: string) {
+    return this.noteService.getAll(createdAt);
+  }
+
+  @Get(':id')
+  async getById(@Param('id') id: string) {
+    return await this.noteService.getOne(id);
   }
 
   @Get('organized')

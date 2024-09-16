@@ -13,7 +13,7 @@ type CreateParams = {
 
 @Injectable()
 export class NoteService {
-  notes = [];
+  private notes = [];
 
   constructor(private readonly noteStrategy: NoteStrategy) {}
 
@@ -21,8 +21,20 @@ export class NoteService {
     return this.noteStrategy.organize(notes);
   }
 
-  getAll() {
+  getAll(createdAt?: string): Note[] {
+    this.notes.slice();
+    if (createdAt) {
+      this.notes = this.notes.filter((note) => note.createdAt === createdAt);
+    }
     return this.notes;
+  }
+
+  getOne(id: string) {
+    const note = this.notes.find((note) => note.id === id);
+    if (!note) {
+      return 'La nota no se encontro!';
+    }
+    return note;
   }
 
   create({ content, createdAt, importance }: CreateParams) {
