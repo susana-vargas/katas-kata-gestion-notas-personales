@@ -12,7 +12,7 @@ import { DatabaseModule } from './database/database.module';
   imports: [
     BullModule.forRoot({
       redis: {
-        host: 'redis',
+        host: 'localhost',
         port: 6379,
       },
     }),
