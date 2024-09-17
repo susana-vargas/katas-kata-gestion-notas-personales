@@ -1,13 +1,11 @@
-version: '3'
+version: '3.3'
+
 services:
   redis:
     image: 'redis:alpine'
     ports:
       - '6379:6379'
 
-version: '3.3'
-
-services:
   postgres:
     image: postgres:13
     environment:
