@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { UserEntity } from './user.entity';
 
 @Entity('note_entity')
 export class NoteEntity {
@@ -13,4 +14,8 @@ export class NoteEntity {
 
   @Column({ type: 'integer' })
   importance: number;
+
+  // muchas notas pertenecen a un usuario
+  @ManyToOne(() => UserEntity, (user) => user.notes)
+  user: UserEntity;
 }

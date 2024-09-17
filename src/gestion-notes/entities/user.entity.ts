@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { NoteEntity } from './note.entity';
 
 @Entity('user_entity')
 export class UserEntity {
@@ -10,4 +11,8 @@ export class UserEntity {
 
   @Column({ type: 'text' })
   password: string;
+
+  // un usuario con muchas notas
+  @OneToMany(() => NoteEntity, (note) => note.user)
+  notes: NoteEntity[];
 }
