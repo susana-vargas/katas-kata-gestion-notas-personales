@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { DatabaseModule } from 'src/database/database.module';
 import { NoteConroller } from './note.controller';
+import { NoteDAO } from './daos/note.dao';
 import { NoteEntity } from './entities/note.entity';
 import { NoteService } from './services/note.service';
 import { NoteStrategy } from './strategys/note.strategy';
@@ -18,9 +19,16 @@ import { QueueProcessor } from './queue.processor';
       name: NOTIFICATION_RECORDATORY,
     }),
     DatabaseModule,
+    NoteDAO,
     TypeOrmModule.forFeature([NoteEntity]),
   ],
   controllers: [NoteConroller],
-  providers: [NoteStrategy, NoteService, NotificationService, QueueProcessor],
+  providers: [
+    NoteStrategy,
+    NoteService,
+    NotificationService,
+    QueueProcessor,
+    NoteDAO,
+  ],
 })
 export class NoteModule {}
