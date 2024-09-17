@@ -7,4 +7,7 @@ export class UserEntity {
 
   @Column({ type: 'varchar' })
   name: string;
+
+  @Column({ type: 'text' })
+  password: string;
 }

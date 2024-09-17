@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 
 import { NoteService } from './services/note.service';
-import { NoteDto } from './dtos/note.dto';
+import { NoteDTO } from './dtos/note.dto';
 import { Note } from './types/notes';
 import { NotificationService } from './services/notification-service';
 
@@ -33,7 +33,7 @@ export class NoteConroller {
   }
 
   @Post()
-  create(@Body() { id, content, createdAt, importance }: NoteDto) {
-    return this.noteService.create({ id, content, createdAt, importance });
+  create(@Body() { content, createdAt, importance }: NoteDTO) {
+    return this.noteService.create({ content, createdAt, importance });
   }
 }

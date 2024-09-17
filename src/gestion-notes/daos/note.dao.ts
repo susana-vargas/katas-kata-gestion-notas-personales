@@ -1,6 +1,9 @@
-import { Note } from '../types/notes';
+import { Injectable } from '@nestjs/common';
 import { v4 } from 'uuid';
 
+import { Note } from '../types/notes';
+
+@Injectable()
 export class NoteDAO {
   private notes = [];
 

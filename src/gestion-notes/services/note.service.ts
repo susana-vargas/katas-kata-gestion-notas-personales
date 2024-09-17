@@ -5,7 +5,6 @@ import { NoteDAO } from '../daos/note.dao';
 import { NoteStrategy } from '../strategys/note.strategy';
 
 type CreateParams = {
-  id: string;
   content: string;
   createdAt: string;
   importance: number;
@@ -30,7 +29,7 @@ export class NoteService {
     return this.noteDAO.findOne(id);
   }
 
-  create({ id, content, createdAt, importance }: CreateParams) {
-    return this.noteDAO.save({ id, content, createdAt, importance });
+  create({ content, createdAt, importance }: CreateParams) {
+    return this.noteDAO.save({ content, createdAt, importance });
   }
 }

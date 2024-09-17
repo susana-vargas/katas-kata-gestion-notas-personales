@@ -11,7 +11,9 @@ import { NoteStrategy } from './strategys/note.strategy';
 import { NOTIFICATION_RECORDATORY } from 'src/constants';
 import { NotificationService } from './services/notification-service';
 import { QueueProcessor } from './queue.processor';
-// import { NotifyController } from './notify.controller';
+import { UserController } from './user.controller';
+import { UserDAO } from './daos/user.dao';
+import { UserService } from './services/user.service';
 
 @Module({
   imports: [
@@ -19,16 +21,18 @@ import { QueueProcessor } from './queue.processor';
       name: NOTIFICATION_RECORDATORY,
     }),
     DatabaseModule,
-    NoteDAO,
     TypeOrmModule.forFeature([NoteEntity]),
   ],
-  controllers: [NoteConroller],
+  controllers: [NoteConroller, UserController],
   providers: [
+    QueueProcessor,
     NoteStrategy,
     NoteService,
+    UserService,
     NotificationService,
-    QueueProcessor,
     NoteDAO,
+    UserDAO,
   ],
+  exports: [NoteDAO],
 })
 export class NoteModule {}
