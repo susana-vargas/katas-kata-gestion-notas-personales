@@ -6,9 +6,9 @@ import { User } from '../types/users';
 
 @Injectable()
 export class UserDAO {
-  users: User[] = [];
+  private users: User[] = [];
 
-  findOne(id: string) {
+  findOne(id: string): User | string {
     const user = this.users.find((user) => user.id === id);
     if (!user) {
       return 'La nota no se encontro!';

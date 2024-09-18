@@ -16,7 +16,7 @@ export class UserService {
     return this.userDAO.findAll();
   }
 
-  getOne(id: string) {
+  async getOne(id: string): Promise<User | string> {
     return this.userDAO.findOne(id);
   }
 

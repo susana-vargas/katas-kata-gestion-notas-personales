@@ -3,14 +3,15 @@ import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { User } from './types/users';
 import { UserDTO } from './dtos/user.dto';
 import { UserService } from './services/user.service';
-import { UserDAO } from './daos/user.dao';
 
-@Controller('user')
+type UserRegisterResponse = {
+  message: string;
+  userId: string;
+};
+
+@Controller('users')
 export class UserController {
-  constructor(
-    private readonly userService: UserService,
-    private readonly userDAO: UserDAO,
-  ) {}
+  constructor(private readonly userService: UserService) {}
 
   @Get()
   getAll(): User[] {
@@ -22,14 +23,11 @@ export class UserController {
     return await this.userService.getOne(id);
   }
 
-  @Post()
-  create(@Body() { name, password }: UserDTO) {
-    return this.userService.create({ name, password });
-  }
-
   @Post('register')
-  async register(@Body() user: User) {
-    const newUser = await this.userDAO.save(user);
+  async register(
+    @Body() { name, password }: UserDTO,
+  ): Promise<UserRegisterResponse> {
+    const newUser = await this.userService.create({ name, password });
     return {
       message: 'Usuario creado exitosamente',
       userId: newUser.id,

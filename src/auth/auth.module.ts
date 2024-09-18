@@ -14,8 +14,10 @@ config();
   imports: [
     PassportModule,
     JwtModule.register({
-      secret: process.env.JWT_SECRET_KEY, // Clave secreta para firmar el token
-      signOptions: { expiresIn: '1h' }, // Tiempo de expiración del token (1 hora en este caso)
+      // Clave secreta para firmar el token
+      secret: process.env.JWT_SECRET_KEY,
+      // Tiempo de expiración del token (1 hora)
+      signOptions: { expiresIn: '1h' },
     }),
     NoteModule,
   ],

@@ -8,7 +8,7 @@ import { UserDAO } from 'src/gestion-notes/daos/user.dao';
 export class AuthService {
   constructor(
     private readonly userDAO: UserDAO,
-    private readonly jwtService: JwtService, // Inyectamos JwtService
+    private readonly jwtService: JwtService,
   ) {}
 
   // TODO: seguir revisando porqu eel user me devuelbe undefined
@@ -28,9 +28,11 @@ export class AuthService {
   }
 
   async login(user: any) {
-    const payload = { name: user.name, sub: user.id }; // Creamos el payload con nombre e ID del usuario
+    // Creamos el payload con nombre e ID del usuario
+    const payload = { name: user.name, sub: user.id };
     return {
-      access_token: this.jwtService.sign(payload), // Generamos el token JWT
+      // Generamos el token JWT
+      access_token: this.jwtService.sign(payload),
     };
   }
 }
