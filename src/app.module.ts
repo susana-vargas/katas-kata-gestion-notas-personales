@@ -1,12 +1,9 @@
 import { BullModule } from '@nestjs/bull';
 import { Module } from '@nestjs/common';
 
-import { NoteModule } from './gestion-notes/note.module';
+import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
-// import { AppController } from './app.controller';
-// import { AppService } from './app.service';
-// import { UserController } from './gestion-notes/user.controller';
-// import { UserService } from './gestion-notes/services/user.service';
+import { NoteModule } from './gestion-notes/note.module';
 
 @Module({
   imports: [
@@ -18,8 +15,7 @@ import { DatabaseModule } from './database/database.module';
     }),
     NoteModule,
     DatabaseModule,
+    AuthModule,
   ],
-  // controllers: [AppController, UserController],
-  // providers: [AppService, UserService],
 })
 export class AppModule {}

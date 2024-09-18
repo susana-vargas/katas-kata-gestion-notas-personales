@@ -1,32 +1,46 @@
 import { Injectable } from '@nestjs/common';
 import { v4 } from 'uuid';
+import * as bcrypt from 'bcrypt';
 
 import { User } from '../types/users';
 
 @Injectable()
 export class UserDAO {
-  private notes = [];
+  users: User[] = [];
 
   findOne(id: string) {
-    const note = this.notes.find((note) => note.id === id);
-    if (!note) {
+    const user = this.users.find((user) => user.id === id);
+    if (!user) {
       return 'La nota no se encontro!';
     }
-    return note;
+    return user;
   }
 
   findAll(): User[] {
-    return this.notes;
+    return this.users;
   }
 
-  save({ name, password }: User) {
+  async findOneByName(name: string): Promise<any> {
+    return this.users.find((user) => user.name === name);
+  }
+
+  async save({
+    name,
+    password,
+  }: {
+    name: string;
+    password: string;
+  }): Promise<User> {
+    // se encripta la contraseña
+    const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = {
       id: v4(),
       name,
-      password,
+      password: hashedPassword,
     };
-    console.log('en el servicio');
-    this.notes.push(newUser);
-    return 'se creo un nuevo usuario';
+    console.log('se creo un nuevo usuario');
+    this.users.push(newUser);
+
+    return newUser;
   }
 }
