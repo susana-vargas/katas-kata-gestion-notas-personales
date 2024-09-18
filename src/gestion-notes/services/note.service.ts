@@ -38,4 +38,8 @@ export class NoteService {
     };
     return this.noteDAO.save(newNote);
   }
+
+  async delete(id: string): Promise<void> {
+    return this.noteDAO.delete(id);
+  }
 }

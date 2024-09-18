@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
 
 import { NoteService } from './services/note.service';
 import { NoteDTO } from './dtos/note.dto';
@@ -34,6 +42,17 @@ export class NoteConroller {
 
   @Post()
   create(@Body() { content, createdAt, importance }: NoteDTO) {
-    return this.noteService.create({ content, createdAt, importance });
+    this.noteService.create({ content, createdAt, importance });
+    return {
+      message: `Nota creada correctamente`,
+    };
+  }
+
+  @Delete(':id')
+  async deleteById(@Param('id') id: string) {
+    await this.noteService.delete(id);
+    return {
+      message: `Nota con id ${id} fue eliminada correctamente`,
+    };
   }
 }

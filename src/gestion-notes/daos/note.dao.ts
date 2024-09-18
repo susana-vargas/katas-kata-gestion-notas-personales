@@ -62,4 +62,8 @@ export class NoteDAO {
   private generateId(): string {
     return uuidv4();
   }
+
+  async delete(id: string): Promise<void> {
+    await this.noteRepository.delete(id);
+  }
 }
