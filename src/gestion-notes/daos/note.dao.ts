@@ -1,37 +1,65 @@
 import { Injectable } from '@nestjs/common';
-import { v4 } from 'uuid';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { v4 as uuidv4 } from 'uuid';
 
-import { Note } from '../types/notes';
+// import { Note } from '../types/notes';
+import { NoteEntity } from '../typeorm/entities/note.entity';
+import { NoteRepository } from '../repositorys/note.repository';
+import { CreateParams } from '../services/note.service';
 
 @Injectable()
 export class NoteDAO {
   private notes = [];
 
-  findOne(id: string) {
+  constructor(
+    @InjectRepository(NoteEntity)
+    private readonly noteRepository: Repository<NoteEntity>,
+  ) {}
+
+  async findOne(id: string): Promise<NoteEntity | string> {
     const note = this.notes.find((note) => note.id === id);
     if (!note) {
       return 'La nota no se encontro!';
     }
     return note;
+    // await this.noteRepository.findOne({ where: { id } });
   }
 
-  findAll(createdAt?: string): Note[] {
-    this.notes.slice();
+  async findAll(createdAt?: string): Promise<NoteEntity[]> {
     if (createdAt) {
-      this.notes = this.notes.filter((note) => note.createdAt === createdAt);
+      // Si pasan una fecha de creación, filtra las notas con esa fecha
+      return await this.noteRepository.find({
+        where: { createdAt },
+      });
+    } else {
+      // Si no se pasa una fecha, devuelve todas las notas
+      return await this.noteRepository.find();
     }
-    return this.notes;
   }
 
-  save({ content, createdAt, importance }: Note) {
-    const newNote = {
-      id: v4(),
+  async save({
+    content,
+    createdAt,
+    importance,
+  }: CreateParams): Promise<NoteEntity> {
+    const note = new NoteRepository(
+      this.generateId(),
       content,
       createdAt,
       importance,
-    };
-    console.log('en el servicio');
-    this.notes.push(newNote);
-    return 'se creo una nota';
+    );
+    const entity = new NoteEntity();
+    entity.id = note.getId();
+    entity.content = note.getContent();
+    entity.createdAt = note.getCreatedAt();
+    entity.importance = note.getImportance();
+    await this.noteRepository.save(entity);
+
+    return void 0;
+  }
+
+  private generateId(): string {
+    return uuidv4();
   }
 }

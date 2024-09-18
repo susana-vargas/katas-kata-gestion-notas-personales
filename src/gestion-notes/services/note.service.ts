@@ -3,8 +3,9 @@ import { Injectable } from '@nestjs/common';
 import { Note } from '../types/notes';
 import { NoteDAO } from '../daos/note.dao';
 import { NoteStrategy } from '../strategys/note.strategy';
+import { NoteEntity } from '../typeorm/entities/note.entity';
 
-type CreateParams = {
+export type CreateParams = {
   content: string;
   createdAt: string;
   importance: number;
@@ -21,7 +22,7 @@ export class NoteService {
     return this.noteStrategy.organize(notes);
   }
 
-  getAll(createdAt?: string): Note[] {
+  async getAll(createdAt?: string): Promise<NoteEntity[]> {
     return this.noteDAO.findAll(createdAt);
   }
 
@@ -30,6 +31,11 @@ export class NoteService {
   }
 
   create({ content, createdAt, importance }: CreateParams) {
-    return this.noteDAO.save({ content, createdAt, importance });
+    const newNote = {
+      content,
+      createdAt,
+      importance,
+    };
+    return this.noteDAO.save(newNote);
   }
 }
