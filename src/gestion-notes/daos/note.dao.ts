@@ -17,13 +17,8 @@ export class NoteDAO {
     private readonly noteRepository: Repository<NoteEntity>,
   ) {}
 
-  async findOne(id: string): Promise<NoteEntity | string> {
-    const note = this.notes.find((note) => note.id === id);
-    if (!note) {
-      return 'La nota no se encontro!';
-    }
-    return note;
-    // await this.noteRepository.findOne({ where: { id } });
+  async findOne(id: string): Promise<NoteEntity> {
+    return this.noteRepository.findOne({ where: { id } });
   }
 
   async findAll(createdAt?: string): Promise<NoteEntity[]> {

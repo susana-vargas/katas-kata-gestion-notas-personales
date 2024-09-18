@@ -26,7 +26,7 @@ export class NoteService {
     return this.noteDAO.findAll(createdAt);
   }
 
-  getOne(id: string) {
+  getOne(id: string): Promise<NoteEntity> {
     return this.noteDAO.findOne(id);
   }
 

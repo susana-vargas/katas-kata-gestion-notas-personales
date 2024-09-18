@@ -8,9 +8,10 @@ import {
   Query,
 } from '@nestjs/common';
 
-import { NoteService } from './services/note.service';
-import { NoteDTO } from './dtos/note.dto';
 // import { Note } from './types/notes';
+import { NoteDTO } from './dtos/note.dto';
+import { NoteEntity } from './typeorm/entities/note.entity';
+import { NoteService } from './services/note.service';
 import { NotificationService } from './notify/services/notification-service';
 
 @Controller('note')
@@ -31,7 +32,7 @@ export class NoteConroller {
   }
 
   @Get(':id')
-  async getById(@Param('id') id: string) {
+  async getById(@Param('id') id: string): Promise<NoteEntity> {
     return await this.noteService.getOne(id);
   }
 
