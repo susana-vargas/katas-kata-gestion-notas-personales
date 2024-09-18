@@ -14,13 +14,17 @@ export class AuthService {
   // TODO: seguir revisando porqu eel user me devuelbe undefined
   async validateUser(name: string, password: string): Promise<any> {
     const user = await this.userDAO.findOneByName(name);
-    if (user && (await bcrypt.compare(password, user.password))) {
-      // Si las credenciales coinciden, eliminamos la contraseña antes de devolver el usuario
-      const { password, ...result } = user;
-      console.log(password, 'la contraseña que no se usaba ahora se usa');
-      return result;
+    if (!user) {
+      return null;
     }
-    return null;
+    const isPasswordMatching = await bcrypt.compare(password, user.password);
+    if (!isPasswordMatching) {
+      return null;
+    }
+    // Si las credenciales coinciden, eliminamos la contraseña antes de devolver el usuario
+    const { _password, ...result } = user;
+    console.log(password, 'la contraseña que no se usaba ahora se usa');
+    return result;
   }
 
   async login(user: any) {

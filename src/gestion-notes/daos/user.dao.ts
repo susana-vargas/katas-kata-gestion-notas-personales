@@ -20,7 +20,7 @@ export class UserDAO {
     return this.users;
   }
 
-  async findOneByName(name: string): Promise<any> {
+  async findOneByName(name: string): Promise<User> {
     return this.users.find((user) => user.name === name);
   }
 

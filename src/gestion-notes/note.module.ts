@@ -33,6 +33,6 @@ import { UserService } from './services/user.service';
     NoteDAO,
     UserDAO,
   ],
-  exports: [NoteDAO],
+  exports: [NoteDAO, UserDAO],
 })
 export class NoteModule {}
