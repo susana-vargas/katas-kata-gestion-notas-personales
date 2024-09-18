@@ -36,6 +36,7 @@ export class NoteService {
       createdAt,
       importance,
     };
+
     return this.noteDAO.save(newNote);
   }
 

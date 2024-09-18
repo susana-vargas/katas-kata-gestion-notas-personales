@@ -8,7 +8,7 @@ import {
   Query,
 } from '@nestjs/common';
 
-// import { Note } from './types/notes';
+import { Note } from './types/notes';
 import { NoteDTO } from './dtos/note.dto';
 import { NoteEntity } from './typeorm/entities/note.entity';
 import { NoteService } from './services/note.service';
@@ -36,14 +36,17 @@ export class NoteConroller {
     return await this.noteService.getOne(id);
   }
 
-  // @Get('organized')
-  // getOrganizedNotes(): Note[] {
-  //   return this.noteService.organizeNotes(this.noteService.getAll());
-  // }
+  @Get('organized')
+  async getOrganizedNotes(): Promise<Note[]> {
+    const notes = await this.noteService.getAll();
+
+    return this.noteService.organizeNotes(notes);
+  }
 
   @Post()
   create(@Body() { content, createdAt, importance }: NoteDTO) {
     this.noteService.create({ content, createdAt, importance });
+
     return {
       message: `Nota creada correctamente`,
     };
@@ -52,6 +55,7 @@ export class NoteConroller {
   @Delete(':id')
   async deleteById(@Param('id') id: string) {
     await this.noteService.delete(id);
+
     return {
       message: `Nota con id ${id} fue eliminada correctamente`,
     };

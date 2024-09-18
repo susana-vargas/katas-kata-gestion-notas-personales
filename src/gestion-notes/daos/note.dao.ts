@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
-// import { Note } from '../types/notes';
 import { NoteEntity } from '../typeorm/entities/note.entity';
 import { NoteRepository } from '../repositorys/note.repository';
 import { CreateParams } from '../services/note.service';

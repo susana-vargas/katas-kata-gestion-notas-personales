@@ -13,6 +13,7 @@ import { NotificationService } from './notify/services/notification-service';
 import { QueueProcessor } from './processors/queue.processor';
 import { UserController } from './user.controller';
 import { UserDAO } from './daos/user.dao';
+import { UserEntity } from './typeorm/entities/user.entity';
 import { UserService } from './services/user.service';
 
 @Module({
@@ -21,7 +22,7 @@ import { UserService } from './services/user.service';
       name: NOTIFICATION_RECORDATORY,
     }),
     DatabaseModule,
-    TypeOrmModule.forFeature([NoteEntity]),
+    TypeOrmModule.forFeature([NoteEntity, UserEntity]),
   ],
   controllers: [NoteConroller, UserController],
   providers: [
