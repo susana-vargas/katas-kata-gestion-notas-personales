@@ -16,7 +16,7 @@ export class UserService {
     return this.userDAO.findAll();
   }
 
-  getOne(id: string): Promise<UserEntity> {
+  getOne(id: string): Promise<Partial<UserEntity>> {
     return this.userDAO.findOne(id);
   }
 

@@ -19,7 +19,7 @@ export class UserController {
   }
 
   @Get(':id')
-  async getById(@Param('id') id: string): Promise<UserEntity> {
+  async getById(@Param('id') id: string): Promise<Partial<UserEntity>> {
     return await this.userService.getOne(id);
   }
 

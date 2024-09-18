@@ -16,16 +16,18 @@ export class UserDAO {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  async findOne(id: string): Promise<UserEntity> {
-    return this.userRepository.findOne({ where: { id } });
+  async findOne(id: string): Promise<Partial<UserEntity>> {
+    return this.userRepository.findOne({
+      where: { id },
+      select: ['id', 'name'],
+    });
   }
 
   async findAll(): Promise<UserEntity[]> {
-    return await this.userRepository.find();
+    return await this.userRepository.find({ select: ['id', 'name'] });
   }
 
   async findOneByName(name: string): Promise<User> {
-    // return this.users.find((user) => user.name === name);
     return await this.userRepository.findOne({
       where: { name: name },
     });
