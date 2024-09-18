@@ -4,7 +4,7 @@ export class NotesTable1726516207659 implements MigrationInterface {
   async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'notes',
+        name: 'note_entity',
         columns: [
           {
             name: 'id',

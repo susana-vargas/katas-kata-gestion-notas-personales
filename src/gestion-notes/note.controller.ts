@@ -14,7 +14,7 @@ import { NoteEntity } from './typeorm/entities/note.entity';
 import { NoteService } from './services/note.service';
 import { NotificationService } from './notify/services/notification-service';
 
-@Controller('note')
+@Controller('notes')
 export class NoteConroller {
   constructor(
     private readonly noteService: NoteService,
