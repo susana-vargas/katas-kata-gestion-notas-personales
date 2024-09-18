@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 
-import { User } from './types/users';
 import { UserDTO } from './dtos/user.dto';
+import { UserEntity } from './typeorm/entities/user.entity';
 import { UserService } from './services/user.service';
 
 type UserRegisterResponse = {
@@ -14,12 +14,12 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  getAll(): User[] {
+  getAll(): Promise<UserEntity[]> {
     return this.userService.getAll();
   }
 
   @Get(':id')
-  async getById(@Param('id') id: string) {
+  async getById(@Param('id') id: string): Promise<UserEntity> {
     return await this.userService.getOne(id);
   }
 
@@ -31,6 +31,14 @@ export class UserController {
     return {
       message: 'Usuario creado exitosamente',
       userId: newUser.id,
+    };
+  }
+
+  @Delete(':id')
+  async deleteById(@Param('id') id: string) {
+    await this.userService.delete(id);
+    return {
+      message: `Nota con id ${id} fue eliminada correctamente`,
     };
   }
 }

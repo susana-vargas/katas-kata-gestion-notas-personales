@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
-import { User } from '../types/users';
 import { UserDAO } from '../daos/user.dao';
+import { UserEntity } from '../typeorm/entities/user.entity';
 
 type CreateParams = {
   name: string;
@@ -12,15 +12,19 @@ type CreateParams = {
 export class UserService {
   constructor(private readonly userDAO: UserDAO) {}
 
-  getAll(): User[] {
+  async getAll(): Promise<UserEntity[]> {
     return this.userDAO.findAll();
   }
 
-  async getOne(id: string): Promise<User | string> {
+  getOne(id: string): Promise<UserEntity> {
     return this.userDAO.findOne(id);
   }
 
   create({ name, password }: CreateParams) {
     return this.userDAO.save({ name, password });
+  }
+
+  async delete(id: string): Promise<void> {
+    return this.userDAO.delete(id);
   }
 }
