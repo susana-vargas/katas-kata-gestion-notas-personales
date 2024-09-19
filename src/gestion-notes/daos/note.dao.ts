@@ -3,9 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
+import { CreateParams } from '../services/note.service';
 import { NoteEntity } from '../typeorm/entities/note.entity';
 import { NoteRepository } from '../repositorys/note.repository';
-import { CreateParams } from '../services/note.service';
+import { SearchDto } from '../dtos/search.dto';
 import { UserEntity } from '../typeorm/entities/user.entity';
 
 @Injectable()
@@ -21,30 +22,35 @@ export class NoteDAO {
     return this.noteRepository.findOne({ where: { id } });
   }
 
-  async findAll(createdAt?: string): Promise<NoteEntity[]> {
+  async findAll(
+    { limit, offset, where }: SearchDto,
+    createdAt?: string,
+  ): Promise<{ data: NoteEntity[]; totalItems: number; totalPages: number }> {
+    const queryBuilder = this.noteRepository
+      .createQueryBuilder('note')
+      .leftJoinAndSelect('note.user', 'user')
+      .select(['note', 'user.id', 'user.name']);
+
     if (createdAt) {
-      // Si pasan una fecha de creación, filtra las notas con esa fecha
-      return await this.noteRepository.find({
-        where: { createdAt },
-        relations: ['user'],
-        select: {
-          user: {
-            id: true,
-            name: true,
-          },
-        },
-      });
-    } else {
-      return await this.noteRepository.find({
-        relations: ['user'], // cargar la relación con el usuario
-        select: {
-          user: {
-            id: true,
-            name: true,
-          },
-        },
-      });
+      queryBuilder.andWhere('note.createdAt = :createdAt', { createdAt });
     }
+
+    if (where) {
+      queryBuilder.andWhere(
+        'note.title LIKE :where OR note.content LIKE :where',
+        {
+          where: `%${where}%`,
+        },
+      );
+    }
+
+    // añade paginación
+    queryBuilder.skip(offset).take(limit);
+
+    const [data, totalItems] = await queryBuilder.getManyAndCount();
+    const totalPages = Math.ceil(totalItems / limit);
+
+    return { data, totalItems, totalPages };
   }
 
   async save({

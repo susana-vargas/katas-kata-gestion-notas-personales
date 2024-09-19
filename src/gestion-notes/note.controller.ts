@@ -14,6 +14,7 @@ import { NoteDTO } from './dtos/note.dto';
 import { NoteEntity } from './typeorm/entities/note.entity';
 import { NoteService } from './services/note.service';
 import { NotificationService } from './notify/services/notification-service';
+import { SearchDto } from './dtos/search.dto';
 
 @Controller('notes')
 export class NoteConroller {
@@ -22,9 +23,19 @@ export class NoteConroller {
     private readonly notificationService: NotificationService,
   ) {}
 
+  // @Get()
+  // getAll(
+  //   @Query('createdAt') createdAt?: string,
+  //   @Query() { limit, page, where }: SearchDto,
+  // ) {
+  //   return this.noteService.getAll(createdAt);
+  // }
   @Get()
-  getAll(@Query('createdAt') createdAt?: string) {
-    return this.noteService.getAll(createdAt);
+  async getAll(
+    @Query() searchDto: SearchDto, // Buscar por DTO
+    @Query('createdAt') createdAt?: string,
+  ) {
+    return this.noteService.getAll(searchDto, createdAt);
   }
 
   @Get('notify')
@@ -39,9 +50,9 @@ export class NoteConroller {
 
   @Get('organized')
   async getOrganizedNotes(): Promise<Note[]> {
-    const notes = await this.noteService.getAll();
+    const { data } = await this.noteService.getAll();
 
-    return this.noteService.organizeNotes(notes);
+    return this.noteService.organizeNotes(data);
   }
 
   @Post()
