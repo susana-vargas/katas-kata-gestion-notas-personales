@@ -9,8 +9,6 @@ import { UserEntity } from '../typeorm/entities/user.entity';
 
 @Injectable()
 export class UserDAO {
-  private users: User[] = [];
-
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,

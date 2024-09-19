@@ -43,4 +43,8 @@ export class NoteService {
   async delete(id: string): Promise<void> {
     return this.noteDAO.delete(id);
   }
+
+  addUserToNote(noteId: string, userId: string): Promise<void> {
+    return this.noteDAO.create(noteId, userId);
+  }
 }

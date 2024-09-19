@@ -8,6 +8,7 @@ import {
   Query,
 } from '@nestjs/common';
 
+import { AddUserNoteDTO } from './dtos/add-user-note.dto';
 import { Note } from './types/notes';
 import { NoteDTO } from './dtos/note.dto';
 import { NoteEntity } from './typeorm/entities/note.entity';
@@ -59,5 +60,10 @@ export class NoteConroller {
     return {
       message: `Nota con id ${id} fue eliminada correctamente`,
     };
+  }
+
+  @Post(':noteId/users')
+  addUser(@Body() { userId }: AddUserNoteDTO, @Param('noteId') noteId: string) {
+    return this.noteService.addUserToNote(noteId, userId);
   }
 }
