@@ -21,7 +21,6 @@ export class AuthService {
     if (!isPasswordMatching) {
       return null;
     }
-    // Si las credenciales coinciden, eliminamos la contraseña antes de devolver el usuario
     const { password: _password, ...result } = user;
     console.log(password, 'la contraseña que no se usaba ahora se usa');
     return result;
