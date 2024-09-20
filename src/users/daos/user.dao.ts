@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import * as bcrypt from 'bcrypt';
 
 import { User } from '../types/users';
-import { UserEntity } from '../typeorm/entities/user.entity';
+import { UserEntity } from '../typeorm/entity/user.entity';
 
 @Injectable()
 export class UserDAO {

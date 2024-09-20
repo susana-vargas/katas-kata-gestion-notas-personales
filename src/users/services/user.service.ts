@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { UserDAO } from '../daos/user.dao';
-import { UserEntity } from '../typeorm/entities/user.entity';
+import { UserEntity } from '../typeorm/entity/user.entity';
 
 type CreateParams = {
   name: string;

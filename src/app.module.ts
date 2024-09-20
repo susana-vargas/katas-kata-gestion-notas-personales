@@ -3,7 +3,8 @@ import { Module } from '@nestjs/common';
 
 import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
-import { NoteModule } from './gestion-notes/note.module';
+import { NoteModule } from './notes/note.module';
+import { UserModule } from './users/user.module';
 
 @Module({
   imports: [
@@ -13,9 +14,10 @@ import { NoteModule } from './gestion-notes/note.module';
         port: 6379,
       },
     }),
-    NoteModule,
-    DatabaseModule,
     AuthModule,
+    DatabaseModule,
+    NoteModule,
+    UserModule,
   ],
 })
 export class AppModule {}

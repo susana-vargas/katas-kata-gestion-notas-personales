@@ -1,8 +1,8 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 
-import { UserDTO } from './dtos/user.dto';
-import { UserEntity } from './typeorm/entities/user.entity';
+import { UserDTO } from 'src/users/dtos/user.dto';
 import { UserService } from './services/user.service';
+import { UserEntity } from './typeorm/entity/user.entity';
 
 type UserRegisterResponse = {
   message: string;

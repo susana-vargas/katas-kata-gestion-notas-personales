@@ -5,8 +5,9 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './services/auth.service';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategys/jwt.strategy';
+import { NoteModule } from 'src/notes/note.module';
 import { PassportModule } from '@nestjs/passport';
-import { NoteModule } from 'src/gestion-notes/note.module';
+import { UserModule } from 'src/users/user.module';
 
 config();
 
@@ -20,6 +21,7 @@ config();
       signOptions: { expiresIn: '1h' },
     }),
     NoteModule,
+    UserModule,
   ],
   providers: [AuthService, JwtStrategy],
   controllers: [AuthController],

@@ -5,9 +5,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { CreateParams } from '../services/note.service';
 import { NoteEntity } from '../typeorm/entities/note.entity';
-import { NoteRepository } from '../repositorys/note.repository';
+import { NoteRepository } from '../repositories/note.repository';
 import { SearchDto } from '../dtos/search.dto';
-import { UserEntity } from '../typeorm/entities/user.entity';
+import { UserEntity } from 'src/users/typeorm/entity/user.entity';
 
 @Injectable()
 export class NoteDAO {
